@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        body {
+            background-color: #1A1A1A; /* Dark background */
+            color: #FFFFFF; /* White text */
+            font-family: 'Press Start 2P', cursive; /* Pixelated font */
+            font-size: 12px; /* Smaller font size for better pixelated effect */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            image-rendering: pixelated; /* Makes images pixelated */
+            image-rendering: crisp-edges;
+        }
+        .container {
+            display: inline-block;
+            background-color: #333333;
+            padding: 20px;
+            border: 3px solid #FFD700; /* Gold border */
+            border-radius: 10px;
+            margin-top: 50px;
+            max-width: 300px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 16px; /* Reduced font size for better readability */
+            color: #FFD700; /* Gold color */
+            text-shadow: 1px 1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, -1px -1px 0 #000; /* Pixelated shadow effect */
+            margin: 0 0 20px 0;
+        }
+        label, select, input[type="number"], button {
+            display: block;
+            margin: 10px auto;
+        }
+        select, input[type="number"], button {
+            width: 90%; /* Adjust width to fit better */
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #555555;
+            color: #FFD700;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            text-align: center;
+            box-shadow: 0px 0px 5px #000000;
+        }
+        button {
+            background-color: #FFD700;
+            color: #000000;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #FFAA00;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #444444;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ultra Calculator</h1>
+        <label for="ultra">Select Ultra:</label>
+        <select id="ultra">
+            <option value="1">Blue Dragon Ring</option>
+            <option value="2">Red Dragon Ring</option>
+            <option value="3">Firebreath Ring</option>
+            <option value="4">Gobattle Ring</option>
+            <option value="5">Ring of Restoration</option>
+            <option value="6">Bloodmoon Ring</option>
+            <option value="7">Hermes Boots</option>
+            <option value="8">Speed Boots</option>
+            <option value="9">Maximum Speed Boots</option>
+            <option value="10">Normal Invisibility Cloak</option>
+            <option value="11">Extreme Invisibility Cloak</option>
+            <option value="12">Instant Defense Cloak</option>
+            <option value="13">Epic Instant Defense Cloak</option>
+            <option value="14">Health Regeneration Cloak</option>
+            <option value="15">Max Regeneration Cloak</option>
+            <option value="16">Normal Venom Protection Cloak</option>
+            <option value="17">Extraordinary Venom Protection Cloak</option>
+            <option value="18">Fire Protection Cloak</option>
+            <option value="19">Maximum Fire Protection Cloak</option>
+            <option value="20">Anti Freezing Gloves</option>
+            <option value="21">Instant Strength Gloves</option>
+            <option value="22">Epic Strength Gloves</option>
+            <option value="23">Epic Invincibility Potion</option>
+            <option value="24">Firebreath's Blood</option>
+            <option value="25">Gravity Feather</option>
+            <option value="26">Team Gravity Feather</option>
+            <option value="27">Breath Helmet</option>
+            <option value="28">Lava Armor Protector</option>
+            <option value="29">Fire Enchantment</option>
+            <option value="30">Peppermint Strike</option>
+        </select>
+        <label for="luck">Luck:</label>
+        <input type="number" id="luck" min="0" max="20">
+        <label for="clover">Clovers:</label>
+        <input type="number" id="clover" min="0" max="6">
+        <label for="dragons">Lucky Dragons:</label>
+        <input type="number" id="dragons" min="0" max="6">
+        <label for="lemonade">Lemonade:</label>
+        <input type="number" id="lemonade" min="0" max="1">
+        <button id="calculate">Calculate Probability</button>
+        <div id="results"></div>
+    </div>
+    <script>
+        const ultraSelect = document.getElementById("ultra");
+        const luckInput = document.getElementById("luck");
+        const cloverInput = document.getElementById("clover");
+        const dragonsInput = document.getElementById("dragons");
+        const lemonadeInput = document.getElementById("lemonade");
+        const calculateButton = document.getElementById("calculate");
+        const resultsDiv = document.getElementById("results");
+
+        calculateButton.addEventListener("click", () => {
+            const ultraId = ultraSelect.value;
+            const luck = parseInt(luckInput.value) || 0;
+            const clover = parseInt(cloverInput.value) || 0;
+            const dragons = parseInt(dragonsInput.value) || 0;
+            const lemonade = parseInt(lemonadeInput.value) || 0;
+
+            const probability = calculateUltraProbability(ultraId, luck, clover, dragons, lemonade)
+            const fraction = (percentage) => (1 / (percentage / 100)).toFixed(0);
+
+            resultsDiv.textContent = `You have a ${probability.toFixed(3)}% chance of dropping this ultra, or a 1 in ${fraction(probability)} chance.`;
+        });
+
+        function calculateUltraProbability(id, luck, clovers, dragons, lemonade) {
+            if (id != 0) {
+                luck = luck * (1.5 ** clovers) * (1.4 ** dragons) * (1.5 ** lemonade);
+
+                if (luck > 25) {
+                    luck = 25;
+                }
+
+                var luckcalc = 0.0005 * luck + 0.006;
+
+                switch (id) {
+                    case "1": // Blue Ring
+                        return luckcalc * 3.1;
+                    case "2": // Red Ring
+                        return luckcalc * 3.1;
+                    case "3": // FB ring
+                        return luckcalc * 1.36;
+                    case "4": // GB ring
+                        return luckcalc * 1.53;
+                    case "5": // Restoration
+                        return luckcalc * 3.01;
+                    case "6": // Bloodmoon
+                        return luckcalc * 5.85;
+                    case "7": // Hermes
+                        return luckcalc * 24.84;
+                    case "8": // Speed
+                        return luckcalc * 15.72;
+                    case "9": // Max speed
+                        return luckcalc * 13.57;
+                    case "10": // Norm invis
+                        return luckcalc * 18.63;
+                    case "11": // Ex invis
+                        return luckcalc * 18.63;
+                    case "12": // Norm Def
+                        return luckcalc * 14.22;
+                    case "13": // epic def
+                        return luckcalc * 27.15;
+                    case "14": // norm heath
+                        return luckcalc * 15.71;
+                    case "15": // max health
+                        return luckcalc * 9.95;
+                    case "16": // norm venom
+                        return luckcalc * 27.15;
+                    case "17": // ex venom
+                        return luckcalc * 10.47;
+                    case "18": // norm fire
+                        return luckcalc * 13.57;
+                    case "19": // ex fire
+                        return luckcalc * 9.48;
+                    case "20": // Blue gloves
+                        return luckcalc * 14.22;
+                    case "21": // norm strength
+                        return luckcalc * 15.71;
+                    case "22": // max strength
+                        return luckcalc * 9.95;
+                    case "23": // invinc pot
+                        return luckcalc * 31.06;
+                    case "24": // fb blood
+                        return luckcalc * 9.95;
+                    case "25": // gravity feather
+                        return luckcalc * 15.72;
+                    case "26": // Team Gravity Feather
+                        return luckcalc * 9.95;
+                    case "27": // breath helmet
+                        return luckcalc * 14.22;
+                    case "28": // Lava Armor Protector
+                        return luckcalc * 13.57;
+                    case "29": // Fire Enchantment
+                        return luckcalc * 13.57;
+                    case "30": // Peppermint Strike
+                        return luckcalc * 11.91;
+                }
+            } else {
+                return 0;
+            }
+        }
+    </script>
+</body>
+</html>
